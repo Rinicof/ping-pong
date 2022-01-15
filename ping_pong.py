@@ -31,37 +31,38 @@ class Wall(sprite.Sprite):
         self.speed = speed
     def draw_wall(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
+
     def update1(self):
         keys_pressed = key.get_pressed()
-        '''if keys_pressed[K_a] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_d] and self.rect.x < 700:
-            self.rect.x += self.speed'''
         if keys_pressed[K_w] and self.rect.y > 5:
             self.rect.y -= self.speed
         if keys_pressed[K_s] and self.rect.y < 500:
             self.rect.y += self.speed
     def update2(self):
         keys_pressed = key.get_pressed()
-        '''if keys_pressed[K_LEFT] and self.rect.x > 5:
-            self.rect.x -= self.speed
-        if keys_pressed[K_RIGHT] and self.rect.x < 700:
-            self.rect.x += self.speed'''
         if keys_pressed[K_UP] and self.rect.y > 5:
             self.rect.y -= self.speed
         if keys_pressed[K_DOWN] and self.rect.y < 500:
             self.rect.y += self.speed
 
+   
 window = display.set_mode((755, 755))
 display.set_caption("BEST PING PONG EVER")
 background = transform.scale(image.load("bg.png"), (755, 755))
 clock = time.Clock()
 fps = 1050#ti
-bol = GameSprite("bol.png", 333, 333, 100, 100, 10)
-roketka1 = Wall(210, 105, 30, 10, 100, 5, 500, 5)
-roketka2 = Wall(210, 105, 30, 745, 100, 5, 500, 5)
+bol = GameSprite("bol.png", 333, 333, 100, 100, 5)
+roketka1 = Wall(210, 105, 30, 10, 250, 5, 250, 5)
+roketka2 = Wall(210, 105, 30, 745, 250, 5, 250, 5)
 speed_x = bol.speed
 speed_y = bol.speed
+font.init()
+font = font.Font(None, 50)
+count1 = 0
+count2 = 0
+counter1 = font.render(str(count2), True, (255, 255, 255))
+counter2 = font.render(str(count1), True, (255, 255, 255))
+
 
 finish = False
 game = True
@@ -73,6 +74,13 @@ while game:
     if not finish:
         bol.rect.x += speed_x
         bol.rect.y += speed_y
+
+        if bol.rect.x <= 0:
+            count2 += 1
+            bol.rect.x = 333
+        if bol.rect.x >= 755:
+            count1 += 1
+            bol.rect.x = 333
 
         if bol.rect.y > 755 - 100 or bol.rect.y < 0:
             speed_y *= -1
@@ -87,4 +95,8 @@ while game:
     roketka2.draw_wall()
     roketka1.update1()
     roketka2.update2()
+    counter1 = font.render(str(count2), True, (255, 255, 255))
+    counter2 = font.render(str(count1), True, (255, 255, 255))
+    window.blit(counter1, (50, 0))
+    window.blit(counter2, (705, 0))
     display.update()
