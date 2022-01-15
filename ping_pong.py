@@ -47,7 +47,7 @@ class Wall(sprite.Sprite):
 
    
 window = display.set_mode((755, 755))
-display.set_caption("BEST PING PONG EVER")
+display.set_caption("Ping Pong")
 background = transform.scale(image.load("bg.png"), (755, 755))
 clock = time.Clock()
 fps = 1050#ti
